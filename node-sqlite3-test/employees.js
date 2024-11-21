@@ -1,8 +1,8 @@
+// DBアクセス
 const sqlite3 = require("sqlite3");
-const db = new sqlite3.Database("/Users/ryuusei/work/kintai/node-sqlite3-test/kintai.db");
-
+const db = new sqlite3.Database("./kintai.db");
 // 全レコード取得
-export function fetchAllEmployees() {
+function fetchAllEmployees() {
     return new Promise((resolve, reject) => {
         db.all("SELECT * FROM employees", (err, rows) => {
             if (err) {
