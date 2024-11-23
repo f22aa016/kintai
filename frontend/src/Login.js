@@ -4,18 +4,29 @@ import './App.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-
+import Employees from './api/employees';
 
 function Login() {
-  // 画面遷移の為
   const navigate = useNavigate();
-
+  
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [passwordType, setPasswordType] = useState("password");
-
+  const [employees, setEmployees] = useState([]);
+  const [error, setError] = useState("");
+  console.log("Employees:", employees);
+  // Employeesデータを取得して照合
   const handleLogin = () => {
-    // 実際の認証処理はここに追加
-    navigate('/home'); // ログイン成功後にHomeページへ遷移
+    const foundEmployee = employees.find(
+      (employee) => employee.id === id && employee.password === password
+    );
+
+    if (foundEmployee) {
+      setError(""); 
+      navigate('/home');
+    } else {
+      setError("IDまたはパスワードが正しくありません。"); 
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -38,18 +49,21 @@ function Login() {
       <div className="form-container">
         <h1 className="h1_loginscreen">Time Stamp</h1>
         <p className="subtitle">勤怠管理システム</p>
-        <form method="post" action={process.env.REACT_APP_DEPLOY_URL}>
-          
+        <Employees setEmployees={setEmployees} /> 
+
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="input_data">
             <label htmlFor="id" className="form_label">社員 ID</label>
-              <input 
-                type="text" 
-                className="form-control" 
-                name="id" 
-                placeholder="社員 ID" 
-                required 
-              />
-              <label htmlFor="pw" className="form_label">Password</label>
+            <input 
+              type="text" 
+              className="form-control" 
+              name="id" 
+              placeholder="社員 ID" 
+              required 
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
+            <label htmlFor="pw" className="form_label">Password</label>
             <div className="password-field">
               <input 
                 type={passwordType} 
@@ -67,10 +81,10 @@ function Login() {
               )}
             </div>  
           </div>
+          {error && <p className="error-message">{error}</p>}
+          <Button variant="contained" onClick={handleLogin}> ログイン </Button>
         </form>
-        <Button class="login-bt" variant="contained" onClick={handleLogin}> ログイン </Button>
       </div>
-      
     </div>
   );
 }
