@@ -395,4 +395,93 @@ html, body {
   70% { opacity : 1; }
   100% {opacity : 0; }
   }
-  /* ローディング画面 end */
+  /* ローディング画面 end *//* ログイン画面 start */
+body{
+    margin: 0;
+    overflow: hidden;
+}
+
+.body_loginscreen {
+  font-family: "New Time Roman";
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-color: #090909;
+  background-repeat: no-repeat;
+}
+
+/* 右側の画面 */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #090909;
+  padding: 15px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 40%;
+}
+
+/* タイトル */
+.h1_loginscreen {
+  text-align: center;
+  color: #f7f7f7;
+  font-size: 60px;
+  margin: 0;
+}
+
+/* サブタイトル */
+.subtitle {
+  color: #f7f7f7;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* 入力項目のタイトル */
+.form_label {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #f7f7f7;
+  font-size: medium;
+}
+
+/* 入力欄 */
+.form-control {
+  width: 270px;
+  height: 33px;
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* パスワード表示・非表示 */
+.password-toggle-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.password-field {
+  position: relative;
+}
+
+/* ログインボタン */
+.login-bt{
+  margin-top: 40px;
+  color: #090909;
+  background-color: #f7f7f7;
+  font-size: 17px;
+  width: 170px;
+  height: 35px;
+}
+.login-bt:hover{
+  color: #f7f7f7;
+  background-color: #3152c0;
+}
+
+/* ログイン画面 end */
