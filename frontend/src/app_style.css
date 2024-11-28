@@ -1,0 +1,398 @@
+/*ーーーーーーーーーーーーーーーアナログ時計始まりーーーーーーーーーーーーーーーーーー*/  
+  /* 本体始まり */
+  .analog-clock {
+    margin: 0px 0px 0px 0px; /* 左に20px移動、上と下は40pxに設定 */
+    max-width: 700px; /* 幅のレスポンシブ対応 、height 値は JavaScript で決める*/
+    position: fixed;
+    top: 17%;
+    left: 8%;
+    height: 550px;
+    width: 590px;
+    color: #f7f7f7;
+  }
+
+  .clock-label, .clock-dash {
+    color: #f7f7f7;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 3.3em;
+  }
+  
+  .clock-dash {
+    font-size: 2em;
+    color: #f7f7f7;
+  }
+  
+  .hand {
+    position: absolute;
+    width: 50%;
+    background-color: #f7f7f7;
+  }
+  /* 本体終わり */
+
+
+/* 秒針 */
+#second-hand2 {
+    animation: rotation-s2 60s linear infinite; /* 60秒かけて一周 */
+    background-color: #999;
+    border-radius: 2px;
+    height: 4px; /* 線幅 */
+    position: absolute;
+    right: calc(50% - 2px); /* 位置調整 線幅の半分ずらす */
+    top: calc(50% - 2px); /* 位置調整 線幅の半分ずらす */
+    transform-origin: calc(100% - 2px) center; /* アニメーションの中心軸 線幅の半分ずらす */
+    width: 47;
+}
+
+/* 分針 */
+#minute-hand2 {
+    animation: rotation-m2 3600s linear infinite; /* 3600秒、1時間かけて一周 */
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    height: 7px; /* 線幅 */
+    position: absolute;
+    right: calc(50% - 5px); /* 位置調整 線幅の半分ずらす */
+    top: calc(50% - 5px); /* 位置調整 線幅の半分ずらす */
+    transform-origin: calc(100% - 5px) center; /* アニメーションの中心軸 線幅の半分ずらす */
+    width: 45%;
+}
+
+/* 時針 */
+#hour-hand2 {
+    animation: rotation-h2 86400s linear infinite; /* 86400秒、12時間かけて一周 */
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    height: 8px; /* 線幅 */
+    position: absolute;
+    right: calc(50% - 5px); /* 位置調整 線幅の半分ずらす */
+    top: calc(50% - 5px); /* 位置調整 線幅の半分ずらす */
+    transform-origin: calc(100% - 5px) center; /* アニメーションの中心軸 線幅の半分ずらす */
+    width: 37%;
+}
+/*ーーーーーーーーーーーーーーーーーーアナログ時計終わりーーーーーーーーーーーーーーーー*/
+
+
+/* ーーーーーーーーーーーーーーーーー画面全体始まりーーーーーーーーーーーーーーーーーー */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* スクロールを禁止 */
+  }
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+/*ーーーーーーーーーーーーーーーーーー画面全体終わりーーーーーーーーーーーーーーーーー*/
+
+
+/*ーーーーーーーーーーーーーーーデジタル時計始まりーーーーーーーーーーーーーー*/
+/* 共通スタイル */
+.clock {
+  font-family: 'Share Tech Mono', monospace;
+  color: #daf6ff;
+  text-shadow: 0 0 20px #0aafe6;
+  line-height: 1.2;
+  text-align: center;
+  position: fixed;
+  top: 23%;
+  right: 12%;
+}
+
+/* 日付のスタイル */
+.clock-date {
+  font-size: 25px;
+  top: 15%;
+}
+
+/* 時間のスタイル */
+.clock-time {
+  font-size: 93px;
+  margin: 0%;
+}
+
+/* 文字サイズ調整 */
+@media screen and (max-width: 500px) {
+  .clock-date {
+    font-size: 5vw;
+  }
+  .clock-time {
+    font-size: 20vw;
+  }
+}
+/*ーーーーーーーーーーーーーーーデジタル時計終わりーーーーーーーーーーーーーー*/
+
+  
+/*ーーーーーーーーーーーーーーーーーボタン始まりーーーーーーーーーーーーーーーーー*/
+
+.button_mainscreen {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    font-size: 23px;
+    text-align: center;
+    line-height: 100px;
+    border: none;
+    color: #f7f7f7;
+    background-color: #090909;
+    cursor: pointer;
+  }
+  
+  .button_mainscreen.checkin {
+    border: 3px solid #4169e1;
+    margin-right: 25px;
+    position: absolute;
+    top: 440px;
+    left: 60%;
+  }
+  
+  .button_mainscreen.checkin:hover {
+    background-color: #4169e1;
+  }
+  
+  .button_mainscreen.checkout {
+    border: 3px solid #cd5c5c;
+    margin-left: 25px;
+    position: absolute;
+    top: 440px;
+    left: 81%;
+  }
+  
+  .button_mainscreen.checkout:hover {
+    background-color: #cd5c5c;
+  }
+
+  .button_mainscreen.breakstart{
+    border: 3px solid #4169e1;
+    margin-right: 20px;
+    position: absolute;
+    top: 586px;
+    left: 65%;
+  }
+
+  .button_mainscreen.breakstart:hover {
+    background-color: #4169e1;
+  }
+
+  .button_mainscreen.breakend{
+    border: 3px solid #cd5c5c;
+    margin-left: 20px;
+    position: absolute;
+    top: 586px;
+    left: 76%;
+  }
+
+  .button_mainscreen.breakend:hover {
+    background-color: #cd5c5c;
+  }
+  /*ーーーーーーーーーーーーーーーーーーボタン終わりーーーーーーーーーーーーーーーーーー*/
+  
+
+  /*ーーーーーーーーーーーーーーーーーヘッダー始まりーーーーーーーーーーーーーーーーーーーー*/
+
+.header {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+    width: 97%;
+    background-color: #f7f7f7;
+    color: white;
+    padding: 10px 0;
+    z-index: 10;
+    border-radius: 60px; /* 角を丸くする */
+  }
+
+  .header_title {
+    position: absolute;
+    font-size: 24px;
+    top: 0px;
+    left: 15px;
+    color: #000;
+  }
+  
+  .logo {
+    font-size: 24px;
+    margin-left: 20px;
+    font-weight: bold;
+    display: inline-block;
+  }
+  
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
+  
+  .nav ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .nav ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  /* メインコンテンツの上部にスペースを追加してヘッダーを避ける */
+  .container {
+    padding-top: 60px; /* ヘッダーの高さ分だけ余白を追加 */
+  }
+  
+  /*ーーーーーーーーーーーーーーーーーーヘッダー終わりーーーーーーーーーーーーーーーーー*/
+  
+
+  /*ーーーーーーーーーーーーーーーーーー人、線、扉デザイン始まりーーーーーーーーーーーーーーーーーー*/  
+  .csrcl-icon{
+    border: 2px solid #000; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+/* person-icon全体のスタイル */
+.person-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    left: 160px;
+    transition: transform 3s ease; /* アイコン全体にスライドアニメーション */
+  }
+  
+  /* person-iconの顔部分（丸） */
+  .person-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(40%); /* 少し右寄せにする */
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 50%;
+  }
+  
+  /* person-iconの体部分（半円） */
+  .person-icon::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(10%); /* 少し右寄せにする */
+    width: 30px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 15px 15px 0 0;
+  }  
+  /* person-iconホバー時のアニメーション */
+  .person-icon.hovered {
+    transform: translateX(1900px); /* アイコン全体を右にスライド */
+  }  
+
+  .logout-door {
+    position: absolute;
+    left: 90%; /* 位置調整 */
+    top: 5px; /* 少し下に調整 */
+    color: #000;
+  }
+  
+  /*ーーーーーーーーーーーーーーーーーー人、線、扉デザイン終わりーーーーーーーーーーーーーーーーーー*/
+
+
+  /* ローディング画面 start */
+.mikepad-loading {
+  width : 150px;
+  position: absolute;
+  top: 50%;
+  left : 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  -moz-transform: translateY(-50%) translateX(-50%);
+  -o-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
+  }
+  .mikepad-loading .binding {
+  content : ‘’;
+  width : 27px;
+  height : 4px;
+  border : 2px solid #E15958;
+  margin : 0 auto;
+  }
+  .mikepad-loading .pad {
+  width : 15px;
+  height : 18px;
+  border : 2px solid #E15958;
+  border-top : 0;
+  padding : 6px;
+  margin : 0 auto;
+  }
+  .mikepad-loading .line {
+  width : 15px;
+  margin-top : 4px;
+  border-top : 2px solid #E15958;
+  opacity : 0;
+  -webkit-animation : writeline 3s infinite ease-in;
+  -moz-animation : writeline 3s infinite ease-in;
+  -o-animation : writeline 3s infinite ease-in;
+  animation : writeline 3s infinite ease-in;
+  }
+  .mikepad-loading .line:first-child {
+  margin-top : 0;
+  }
+  .mikepad-loading .line.line1 {
+  -webkit-animation-delay: 0s;
+  -moz-animation-delay: 0s;
+  -o-animation-delay: 0s;
+  animation-delay: 0s;
+  }
+  .mikepad-loading .line.line2 {
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+  -o-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  }
+  .mikepad-loading .line.line3 {
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  -o-animation-delay: 1s;
+  animation-delay : 1s;
+  }
+  .mikepad-loading .text {
+  text-align : center;
+  margin-top : 10px;
+  font-size : 14px;
+  color : #E15958;
+  }
+  @-webkit-keyframes writeline {
+  0% { width : 0px; opacity: 0; }
+  33% { width : 15px; opacity : 1; }
+  70% { opacity : 1; }
+  100% {opacity : 0; }
+  }
+  @-moz-keyframes writeline {
+  0% { width : 0px; opacity: 0; }
+  33% { width : 15px; opacity : 1; }
+  70% { opacity : 1; }
+  100% {opacity : 0; }
+  }
+  @-o-keyframes writeline {
+  0% { width : 0px; opacity: 0; }
+  33% { width : 15px; opacity : 1; }
+  70% { opacity : 1; }
+  100% {opacity : 0; }
+  }
+  @keyframes writeline {
+  0% { width : 0px; opacity: 0; }
+  33% { width : 15px; opacity : 1; }
+  70% { opacity : 1; }
+  100% {opacity : 0; }
+  }
+  /* ローディング画面 end */

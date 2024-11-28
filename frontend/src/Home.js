@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+import './app_style.css';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 function Home() {
