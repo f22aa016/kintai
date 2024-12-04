@@ -88,7 +88,7 @@ function Login() {
       setLoading(false);
       localStorage.setItem("token", res.token);
       console.log("ログインに成功しました");
-      navigate("/home"); // ログイン成功後にホームページへ遷移
+      navigate("/"); // ログイン成功後にホームページへ遷移
     } catch (err) {
       console.log(err);
       const errors = err.data.errors;

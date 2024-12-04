@@ -38,7 +38,7 @@ function Home() {
   });
 
   const goToLogin = () => {
-    navigate('/');
+    navigate('/Login');
   };
 
   // デジタル時計の更新
