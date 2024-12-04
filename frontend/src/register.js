@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-function Login() {
+function Register() {
   const theme = createTheme({
     components: {
       MuiTextField: {
@@ -199,4 +199,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

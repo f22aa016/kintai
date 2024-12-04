@@ -61,11 +61,13 @@ border-radius: 4px;
 box-sizing: border-box;
 }
 
+
 /* パスワード表示・非表示 */
-.password-toggle-icon {
+.password-eye {
 cursor: pointer;
 position: absolute;
-right: 10px;
+color: #f30000;
+right: 7%;
 top: 50%;
 transform: translateY(-50%);
 }
