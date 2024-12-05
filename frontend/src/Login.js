@@ -152,7 +152,6 @@ function Login() {
                 name="password"
                 type={passwordType}
                 required
-                setUsername
                 helperText={passwordErrText}
                 error={passwordErrText !== ""}
                 disabled={loading}

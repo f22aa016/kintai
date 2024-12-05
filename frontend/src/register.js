@@ -51,10 +51,12 @@ function Register() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [passwordType, setPasswordType] = useState("password");
   const [usernameErrText, setUsernameErrText] = useState("");
   const [passwordErrText, setPasswordErrText] = useState("");
+  const [confirmPasswordErrText, setConfirmPasswordErrText] = useState("");
   const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -67,6 +69,7 @@ function Register() {
     e.preventDefault();
     setUsernameErrText("");
     setPasswordErrText("");
+    setConfirmPasswordErrText("");
 
     let error = false;
 
@@ -78,17 +81,20 @@ function Register() {
       error = true;
       setPasswordErrText("パスワードを入力してください");
     }
+    if (confirmPassword === "") {
+      error = true;
+      setConfirmPasswordErrText("パスワードを入力してください");
+    }
 
     if (error) return;
     setLoading(true);
 
     try {
-      console.log("asdfghjkl;kjhgfd");
-      const res = await authApi.login({ username, password });
+      const res = await authApi.register({ username, password, confirmPassword });
       setLoading(false);
       localStorage.setItem("token", res.token);
-      console.log("ログインに成功しました");
-      navigate("/home"); // ログイン成功後にホームページへ遷移
+      console.log("新規登録に成功しました");
+      navigate("/"); // ログイン成功後にホームページへ遷移
     } catch (err) {
       console.log(err);
       const errors = err.data.errors;
@@ -98,6 +104,9 @@ function Register() {
           setUsernameErrText(err.msg);
         }
         if (err.param === "password") {
+          setPasswordErrText(err.msg);
+        }
+        if (err.param === "registerPassword") {
           setPasswordErrText(err.msg);
         }
       });
@@ -152,15 +161,42 @@ function Register() {
                 name="password"
                 type={passwordType}
                 required
-                setUsername
                 helperText={passwordErrText}
                 error={passwordErrText !== ""}
                 disabled={loading}
                 onChange={(e) => setPassword(e.target.value)}
+
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end" className={`password-eye ${passwordType !== "password" ? "active" : ""}`}>
                       <IconButton onClick={togglePasswordVisibility} edge="end" sx={{ color: "#f7f7f7", }} > {/*sx:パスワード目の色*/}
+                        {passwordType === "password" ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <TextField
+                id="confirmPassword"
+                label="確認用パスワード"
+                margin="normal"
+                name="confirmPassword"
+                type={passwordType}
+                required
+                helperText={confirmPasswordErrText}
+                error={confirmPasswordErrText !== ""}
+                disabled={loading}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end" className={`password-eye ${passwordType !== "password" ? "active" : ""}`}>
+                      <IconButton onClick={togglePasswordVisibility} edge="end" sx={{ color: "#f7f7f7", }} > 
                         {passwordType === "password" ? (
                           <VisibilityOffIcon />
                         ) : (
@@ -187,11 +223,11 @@ function Register() {
               type="submit"
               loading={loading}
             >
-              ログイン
+              新規登録
             </LoadingButton>
           </Box>
-          <Button component={Link} to="../register">
-            アカウントを持っていませんか？新規登録
+          <Button component={Link} to="../login">
+            アカウントを持っていますか？ログイン
           </Button>
         </>
       </div>
