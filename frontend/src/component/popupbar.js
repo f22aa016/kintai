@@ -1,15 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Typography } from "@mui/material";
+import clockApi from "../api/memoApi";
 
 const PopupBar = ({ isOpen, onClose }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [maxPositionKintai, setMaxPositionKintai] = useState(null);
+  const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 86400000); // 1日ごとに更新
+    const fetchKintaiData = async () => {
+      try {
+        const res = await clockApi.getAllKintai({}, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // ローカルストレージから JWT トークンを取得
+            "Content-Type": "application/json",
+          },
+        });
+        const kintaiData = res;
+        const maxKintai = kintaiData.reduce(
+          (max, current) => (current.position > max.position ? current : max),
+          kintaiData[0]
+        );
 
-    return () => clearInterval(timer); // コンポーネントがアンマウントされるときにタイマーをクリア
-  }, []);
+        setMaxPositionKintai(maxKintai);
+      } catch (error) {
+        console.error("Clock In エラー: ", error.response?.data || error.message);
+      }
+    };
+
+    fetchKintaiData();
+  }, []); 
 
   if (!isOpen) return null;
 
@@ -18,11 +39,13 @@ const PopupBar = ({ isOpen, onClose }) => {
       <div style={styles.menu} onClick={(e) => e.stopPropagation()}>
         <h2>本日の勤怠</h2>
         <h4>{currentDate.toLocaleDateString()}</h4>
-        <p>shimoda さん</p> {/*実際はログインしたusernameを表示*/}
-        <p>出勤時間：</p>
+        <Typography variant="body2" fontWeight="700">
+          {user?.username || "ユーザー名"}
+        </Typography>
+        <p>出勤時間：{maxPositionKintai?.clockIn ? new Date(maxPositionKintai.clockIn).toLocaleTimeString() : "取得中..."}</p>
         <p>休憩開始：</p>
         <p>休憩終了：</p>
-        <p>退勤時間：</p>
+        <p>退勤時間：{maxPositionKintai?.clockOut ? new Date(maxPositionKintai.clockOut).toLocaleTimeString() : "取得中..."}</p>
       </div>
     </div>
   );
@@ -30,27 +53,27 @@ const PopupBar = ({ isOpen, onClose }) => {
 
 const styles = {
   overlay: {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     zIndex: 10,
   },
   menu: {
     width: 500,
     height: 400,
-    border: '2px solid #090909', // 枠線を追加
-    backgroundColor: '#f7f7f7',
+    border: "2px solid #090909",
+    backgroundColor: "#f7f7f7",
     color: "#090909",
-    padding: '1rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
+    padding: "1rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
   },
 };
 

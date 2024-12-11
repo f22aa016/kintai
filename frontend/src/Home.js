@@ -259,7 +259,7 @@ const WorkButtons = ({ id, name }) => {
       });
   
       console.log("Clock In 成功: ", res.data);
-      alert("出勤");
+      window.location.reload();
     } catch (error) {
       console.error("Clock In エラー: ", error.response?.data || error.message);
     }
@@ -276,7 +276,7 @@ const WorkButtons = ({ id, name }) => {
       });
   
       console.log("Clock Out 成功: ", res.data);
-      alert("退勤");
+      window.location.reload();
     } catch (error) {
       console.error("Clock Out エラー: ", error.response?.data || error.message);
     }

@@ -70,21 +70,17 @@ exports.clockOut = async (req, res) => {
   }
 };
 
-
-
-
-
-exports.getAll = async (req, res) => {
+exports.getAllKintai = async (req, res) => {
   try {
-    const memos = await Clock.find({user: req.user._id}).sort("-position");
-    res.status(200).json(memos);
+    const kintais = await Clock.find({user: req.user._id}).sort("-position");
+    res.status(200).json(kintais);
   } catch (err){
     console.error("メモ取得中のエラー:", err); 
     res.status(500).json({ message: "サーバーエラーが発生しました。" }); 
   }
 };
 
-exports.getOne = async (req, res) => {
+exports.getOneClock = async (req, res) => {
   const {memoId} = req.params;
   try {
     const memo = await Clock.findOne({user : req.user._id, _id: memoId});
