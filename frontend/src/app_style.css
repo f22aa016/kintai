@@ -201,7 +201,7 @@ html, body {
     left: 20px;
     width: 97%;
     background-color: #f7f7f7;
-    color: white;
+    color: #f7f7f7;
     padding: 10px 0;
     z-index: 10;
     border-radius: 60px; /* 角を丸くする */
@@ -209,10 +209,12 @@ html, body {
 
   .header_title {
     position: absolute;
+    align-items: center;
     font-size: 24px;
-    top: 0px;
+    top: 12px;
     left: 15px;
-    color: #000;
+    margin: 0;
+    color: #090909;
   }
   
   .logo {
@@ -220,6 +222,13 @@ html, body {
     margin-left: 20px;
     font-weight: bold;
     display: inline-block;
+  }
+  .nav{
+    display: flex; /* 子要素を横並びに配置 */
+    align-items: center; /* 縦方向の中央揃え */
+    justify-content: space-between; /* 子要素間のスペースを均等にする */
+    width: 100%; /* ヘッダー内で全幅を占める */
+    padding: 0 20px; /* 左右に余白を追加 */
   }
   
   .nav ul {
@@ -235,7 +244,7 @@ html, body {
   }
   
   .nav ul li a {
-    color: white;
+    color: f7f7f7;
     text-decoration: none;
     font-size: 16px;
   }
@@ -243,6 +252,14 @@ html, body {
   .nav ul li a:hover {
     text-decoration: underline;
   }
+
+  .popupBtn{
+    margin-left: 88%; /* アイコンボタンを右端に配置 */
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
   
   /* メインコンテンツの上部にスペースを追加してヘッダーを避ける */
   .container {
@@ -254,7 +271,7 @@ html, body {
 
   /*ーーーーーーーーーーーーーーーーーー人、線、扉デザイン始まりーーーーーーーーーーーーーーーーーー*/  
   .csrcl-icon{
-    border: 2px solid #000; 
+    border: 2px solid #090909; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -277,7 +294,7 @@ html, body {
     transform: translateX(40%); /* 少し右寄せにする */
     width: 20px;
     height: 20px;
-    background-color: #000;
+    background-color: #090909;
     border-radius: 50%;
   }
   
@@ -290,7 +307,7 @@ html, body {
     transform: translateX(10%); /* 少し右寄せにする */
     width: 30px;
     height: 20px;
-    background-color: #000;
+    background-color: #090909;
     border-radius: 15px 15px 0 0;
   }  
   /* person-iconホバー時のアニメーション */
@@ -301,8 +318,8 @@ html, body {
   .logout-door {
     position: absolute;
     left: 90%; /* 位置調整 */
-    top: 5px; /* 少し下に調整 */
-    color: #000;
+    top: 10px; /* 少し下に調整 */
+    color: #090909;
   }
   
   /*ーーーーーーーーーーーーーーーーーー人、線、扉デザイン終わりーーーーーーーーーーーーーーーーーー*/

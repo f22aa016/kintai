@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './app_style.css';
 import LogoutIcon from '@mui/icons-material/Logout';
+import IconButton from '@mui/material/IconButton';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // React Font Awesome コンポーネント
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"; // アイコン
+import PopupBar from './component/popupbar';
+
 
 function Home() {
   const [isHovered, setIsHovered] = useState(false); // ホバー状態を管理
@@ -11,6 +16,15 @@ function Home() {
 
   const handleMouseEnter = () => setIsHovered(true); // ホバー時
   const handleMouseLeave = () => setIsHovered(false); // ホバー解除時
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // ポップアップの状態管理
+
+  const togglePopup = () => {
+    setIsPopupOpen((prev) => {
+      console.log('isPopupOpen:', !prev); // 状態が正しく切り替わるか確認
+      return !prev
+    });
+  };
 
   useEffect(() => {
     // 2秒後にロード画面を非表示にする
@@ -149,6 +163,12 @@ function Home() {
                 <strong>Time Stamp</strong>
               </h1>
               <div className={`person-icon ${isHovered ? 'hovered' : ''}`}></div>
+              <div className="popupBtn">
+                <IconButton aria-label="Example" onClick={togglePopup}>
+                  <FontAwesomeIcon icon={faEllipsisV} style={{ color: '#090909' }}/>
+                </IconButton>
+                <PopupBar isOpen={isPopupOpen} onClose={togglePopup} />
+              </div>
               <div className="csrcl-icon"></div>
               <div
                 className="logout-door"
@@ -158,6 +178,7 @@ function Home() {
                 <LogoutIcon sx={{ fontSize: 40 }} />
                 <span style={{ position: 'absolute', bottom: '-30px', color: '#000' }}></span>
               </div>
+
             </nav>
           </header>
           <div className="clock-container">
