@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
 router.use("/auth", require("./auth"));
-router.use("/memo", require("./memo"));
+router.use("/kintai", require("./kintai"));
 
 module.exports = router;

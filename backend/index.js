@@ -2,8 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = 5050;
-require("dotenv").config();
 const cors = require("cors");
+require("dotenv").config();  // dotenvを先に読み込む
+process.env.TZ = process.env.TZ || 'Asia/Tokyo'; 
 
 app.use(
     cors({

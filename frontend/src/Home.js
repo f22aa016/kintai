@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // React Font 
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"; // アイコン
 import PopupBar from './component/popupbar';
 
+import clockApi from './api/memoApi';
 
 function Home() {
   const [isHovered, setIsHovered] = useState(false); // ホバー状態を管理
@@ -224,12 +225,45 @@ function Home() {
 }
 
 const WorkButtons = ({ id, name }) => {
+  // 出勤API
+  const clockInHandler = async () => {
+    try {
+      const res = await clockApi.clockIn({}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // ローカルストレージから JWT トークンを取得
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Clock In 成功: ", res.data);
+      alert("出勤");
+    } catch (error) {
+      console.error("Clock In エラー: ", error.response?.data || error.message);
+    }
+  };
+
+  // 退勤API
+  const clockOutHandler = async () => {
+    try {
+      const res = await clockApi.clockOut({}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // ローカルストレージから JWT トークンを取得
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Clock Out 成功: ", res.data);
+      alert("退勤");
+    } catch (error) {
+      console.error("Clock Out エラー: ", error.response?.data || error.message);
+    }
+  };  
   return (
     <div>
-      <button className="button_mainscreen checkin" type="button" id="act_in" name="but">
+      <button className="button_mainscreen checkin" type="button" id="act_in" name="but" onClick={clockInHandler}>
         出勤
       </button>
-      <button className="button_mainscreen checkout" type="button" id="act_out" name="but">
+      <button className="button_mainscreen checkout" type="button" id="act_out" name="but" onClick={clockOutHandler}>
         退勤
       </button>
       <button className="button_mainscreen breakstart" type="button" id="break_start" name="but">
