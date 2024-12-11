@@ -186,7 +186,7 @@ function Home() {
                 <strong>Time Stamp</strong>
               </h1>
               <div className={`person-icon ${isHovered ? 'hovered' : ''}`}></div>
-              <div>{user.username}</div>
+              <div className='homeUserName'>{user.username}</div>
               <div className="popupBtn">
                 <IconButton aria-label="Example" onClick={togglePopup}>
                   <FontAwesomeIcon icon={faEllipsisV} style={{ color: '#090909' }}/>

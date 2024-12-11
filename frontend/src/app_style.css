@@ -227,7 +227,7 @@ html, body {
   .homeUserName{
     color: #090909;
     position: fixed;
-    top: 1%;
+    /* top: 1%; */
     left: 18%;
     font-size: 18px;
   }
