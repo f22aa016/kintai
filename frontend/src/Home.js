@@ -6,14 +6,19 @@ import IconButton from '@mui/material/IconButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // React Font Awesome コンポーネント
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"; // アイコン
 import PopupBar from './component/popupbar';
-
+import authUtils from './utils/authUtils'
 import clockApi from './api/memoApi';
+import {useDispatch} from "react-redux";
+import { setUser } from './redux/features/userSlice';
 
 function Home() {
   const [isHovered, setIsHovered] = useState(false); // ホバー状態を管理
   const [hoverDuration, setHoverDuration] = useState(0); // ホバー時間を管理
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [user, setUserName] = useState();
+  
 
   const handleMouseEnter = () => setIsHovered(true); // ホバー時
   const handleMouseLeave = () => setIsHovered(false); // ホバー解除時
@@ -26,6 +31,23 @@ function Home() {
       return !prev
     });
   };
+
+  useEffect(() => {
+    // JWTを持っているのか確認する
+    const checkAuth = async () => {
+        // 認証チェック
+        const user = await authUtils.isAuthebticated();
+        console.log(user)
+        if (!user) {
+            navigate("/login")
+        } else{
+            //ユーザーを保存する
+            dispatch(setUser(user));
+            setUserName(user);
+        }
+    };
+    checkAuth();
+}, [navigate]);
 
   useEffect(() => {
     // 2秒後にロード画面を非表示にする
@@ -164,6 +186,7 @@ function Home() {
                 <strong>Time Stamp</strong>
               </h1>
               <div className={`person-icon ${isHovered ? 'hovered' : ''}`}></div>
+              <div>{user.username}</div>
               <div className="popupBtn">
                 <IconButton aria-label="Example" onClick={togglePopup}>
                   <FontAwesomeIcon icon={faEllipsisV} style={{ color: '#090909' }}/>
