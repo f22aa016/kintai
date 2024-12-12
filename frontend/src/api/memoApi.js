@@ -3,6 +3,7 @@ import axiosFrontend from "./axiosFrontend";
 const clockApi = {
     clockIn: () => axiosFrontend.post("/kintai/clock-in"),
     clockOut: () => axiosFrontend.patch("/kintai/clock-out"),
+    breakStart: () => axiosFrontend.patch("/kintai/break-start"),
 
     getAllKintai: () => axiosFrontend.get("/kintai/getAllKintai"),
     getOne: (id) => axiosFrontend.get(`memo/${id}`),

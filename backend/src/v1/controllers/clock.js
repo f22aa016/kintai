@@ -70,6 +70,51 @@ exports.clockOut = async (req, res) => {
   }
 };
 
+exports.breakStart = async (req, res) => {
+  try {
+    console.log("===== デバッグログ: breakIn メソッド開始 =====");
+    
+    // リクエストされたユーザー情報
+    console.log("リクエストユーザーID: ", req.user?._id);
+
+    // 検索条件のログ
+    const searchCondition = { 
+      user: req.user._id, 
+      breakIn: { $exists: false } // clockOut が未設定のレコードを探す 
+    };
+    console.log("検索条件: ", searchCondition);
+
+    // 未完了の clockIn レコードを取得
+    const clock = await Clock.findOne(searchCondition);
+
+    // 検索結果のログ
+    if (!clock) {
+      console.log("未完了の勤務記録が見つかりません。");
+      return res.status(404).json({ message: "未完了の勤務記録が見つかりません。" });
+    }
+    console.log("見つかった勤務記録: ", clock);
+
+    // breakIn を現在時刻に設定
+    const now = new Date();
+    console.log("現在時刻を設定: ", now);
+    clock.breakStart = now;
+
+    // 保存処理
+    await clock.save();
+    console.log("勤務記録を更新しました: ", clock);
+
+    res.status(200).json(clock);
+  } catch (err) {
+    // エラー時のログ
+    console.error("エラー発生: ", err);
+    res.status(500).json({
+      message: "サーバーエラーが発生しました。",
+      error: err.message,
+    });
+  }
+};
+
+
 exports.getAllKintai = async (req, res) => {
   try {
     const kintais = await Clock.find({user: req.user._id}).sort("-position");

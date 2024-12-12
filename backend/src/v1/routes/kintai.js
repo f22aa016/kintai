@@ -7,6 +7,8 @@ router.post("/clock-in", tokenHandler.verifyToken, clockController.clockIn);
 
 // 勤怠記録を終了 (clockOut)
 router.patch("/clock-out", tokenHandler.verifyToken, clockController.clockOut);
+// 勤怠記録を終了 (breakIn)
+router.patch("/break-start", tokenHandler.verifyToken, clockController.breakStart);
 // ログインしているユーザーがt登録した勤怠を全て取得
 router.get("/getAllKintai", tokenHandler.verifyToken, clockController.getAllKintai);
 

@@ -21,6 +21,16 @@ const clockSchema = new mongoose.Schema(
           message: "退勤時刻は出勤時刻より後である必要があります。",
         },
       },
+      breakStart: {
+        type: Date,
+        validate: {
+          validator: function (value) {
+            return !this.clockIn || value > this.clockIn;
+          },
+          message: "休憩開始時刻は出勤時刻より後である必要があります。",
+        },
+      },
+      
       position: {
         type: Number,
         default: 0,
