@@ -44,7 +44,7 @@ const PopupBar = ({ isOpen, onClose }) => {
         </Typography>
         <p>出勤時間：{maxPositionKintai?.clockIn ? new Date(maxPositionKintai.clockIn).toLocaleTimeString() : "取得中..."}</p>
         <p>休憩開始：{maxPositionKintai?.breakStart ? new Date(maxPositionKintai.breakStart).toLocaleTimeString() : "取得中..."}</p>
-        <p>休憩終了：</p>
+        <p>休憩終了：{maxPositionKintai?.breakEnd ? new Date(maxPositionKintai.breakEnd).toLocaleTimeString() : "取得中..."}</p>
         <p>退勤時間：{maxPositionKintai?.clockOut ? new Date(maxPositionKintai.clockOut).toLocaleTimeString() : "取得中..."}</p>
       </div>
     </div>

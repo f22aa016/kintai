@@ -296,6 +296,22 @@ const WorkButtons = ({ id, name }) => {
       console.error("Break Start エラー: ", error.response?.data || error.message);
     }
   }; 
+  // 休憩終了API
+  const breakEndHandler = async () => {
+    try {
+      const res = await clockApi.breakEnd({}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // ローカルストレージから JWT トークンを取得
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Break Start 成功: ", res.data);
+      window.location.reload();
+    } catch (error) {
+      console.error("Break Start エラー: ", error.response?.data || error.message);
+    }
+  }; 
   return (
     <div>
       <button className="button_mainscreen checkin" type="button" id="act_in" name="but" onClick={clockInHandler}>
@@ -307,7 +323,7 @@ const WorkButtons = ({ id, name }) => {
       <button className="button_mainscreen breakstart" type="button" id="break_start" name="but" onClick={breakStartHandler}>
         休憩
       </button>
-      <button className="button_mainscreen breakend" type="button" id="break_end" name="but">
+      <button className="button_mainscreen breakend" type="button" id="break_end" name="but" onClick={breakEndHandler}>
         戻り
       </button>
     </div>
