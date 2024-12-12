@@ -12,16 +12,12 @@ import {useDispatch} from "react-redux";
 import { setUser } from './redux/features/userSlice';
 
 function Home() {
-  const [isHovered, setIsHovered] = useState(false); // ホバー状態を管理
-  const [hoverDuration, setHoverDuration] = useState(0); // ホバー時間を管理
+  const [isClicked, setIsClicked] = useState(false); // クリック状態を管理
+  const [clickDuration, setClickDuration] = useState(0); // クリック後の経過時間を管理
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUserName] = useState();
-  
-
-  const handleMouseEnter = () => setIsHovered(true); // ホバー時
-  const handleMouseLeave = () => setIsHovered(false); // ホバー解除時
 
   const [isPopupOpen, setIsPopupOpen] = useState(false); // ポップアップの状態管理
 
@@ -141,28 +137,32 @@ function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // ホバー時間で自動的にログアウト
+  // クリック時間で自動的にログアウト
   useEffect(() => {
-    if (hoverDuration >= 1) {
+    if (clickDuration >= 1) {  // 例として、クリックから10秒後にログアウト
       goToLogin();
     }
-  }, [hoverDuration]);
+  }, [clickDuration]);
 
-  // ホバー中のタイマー処理
+  // クリック後のタイマー処理
   useEffect(() => {
     let timer;
-    if (isHovered) {
+    if (isClicked) {
       timer = setInterval(() => {
-        setHoverDuration(prev => prev + 1);
-      }, 1000); // 1秒ごとにホバー時間をカウント
+        setClickDuration(prev => prev + 1);
+      }, 1000); // 1秒ごとに経過時間をカウント
     } else {
-      setHoverDuration(0); // ホバー解除時にリセット
+      setClickDuration(0); // クリック解除時にリセット
       if (timer) clearInterval(timer);
     }
     return () => {
       if (timer) clearInterval(timer); // クリーンアップ
     };
-  }, [isHovered]);
+  }, [isClicked]);
+
+  const handleClick = () => {
+    setIsClicked(true); // クリック時
+  };
 
   return (
     <div className="container">
@@ -185,7 +185,7 @@ function Home() {
               <h1 className="header_title">
                 <strong>Time Stamp</strong>
               </h1>
-              <div className={`person-icon ${isHovered ? 'hovered' : ''}`}></div>
+              <div className={`person-icon ${isClicked ? 'clicked' : ''}`}></div>
               <div className='homeUserName'>{user.username}</div>
               <div className="popupBtn">
                 <IconButton aria-label="Example" onClick={togglePopup}>
@@ -196,10 +196,9 @@ function Home() {
               <div className="csrcl-icon"></div>
               <div
                 className="logout-door"
-                onMouseEnter={handleMouseEnter} // ボタンにカーソルが乗ったとき
-                onMouseLeave={handleMouseLeave} // ボタンからカーソルが離れたとき
+                onClick={handleClick} // クリック時に処理開始
               >
-                <LogoutIcon sx={{ fontSize: 40 }} />
+                <LogoutIcon sx={{ fontSize: 35 }} />
                 <span style={{ position: 'absolute', bottom: '-30px', color: '#000' }}></span>
               </div>
 

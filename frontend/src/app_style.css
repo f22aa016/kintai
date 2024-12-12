@@ -320,8 +320,8 @@ html, body {
     border-radius: 15px 15px 0 0;
   }  
   /* person-iconホバー時のアニメーション */
-  .person-icon.hovered {
-    transform: translateX(1900px); /* アイコン全体を右にスライド */
+  .person-icon.clicked {
+    transform: translateX(1800px); /* アイコン全体を右にスライド */
   }  
 
   .logout-door {
