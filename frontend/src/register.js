@@ -123,7 +123,10 @@ function Register() {
             alt="loading"
             width="860"
             height="820"
-            style={{ filter: "brightness(65%)" }}
+            style={{ 
+              height: "100vh", // 画面高さ全体
+              objectFit: "cover", // 画面を完全に覆う
+              filter: "brightness(65%)",}}
           />
         </div>
       </div>
