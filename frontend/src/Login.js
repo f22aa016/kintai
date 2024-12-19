@@ -18,21 +18,21 @@ function Login() {
           root: {
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#f7f7f7", // 通常時の枠線青色
+                borderColor: "#f7f7f7", // 通常時の枠線
               },
               "&:hover fieldset": {
-                borderColor: "#f7f7f7", // ホバー時の枠線青色
+                borderColor: "#f7f7f7", // ホバー時の枠線
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#f7f7f7", // フォーカス時の枠線青色
+                borderColor: "#f7f7f7", // フォーカス時の枠線
               },
-              color: "#f7f7f7", // 入力値の色を白に
+              color: "#f7f7f7", // 入力値の色
             },
             "& .MuiInputLabel-root": {
-              color: "#f7f7f7", // ラベル青色
+              color: "#f7f7f7", // ラベルの色
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#f7f7f7", // フォーカス時のラベル青色
+              color: "#f7f7f7", // フォーカス時のラベル色
             },
           },
         },
@@ -40,7 +40,7 @@ function Login() {
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            color: "#f7f7f7", // 入力値の色を白に
+            color: "#f7f7f7", // 入力値の色
           },
         },
       },
@@ -55,7 +55,9 @@ function Login() {
   const [passwordType, setPasswordType] = useState("password");
   const [usernameErrText, setUsernameErrText] = useState("");
   const [passwordErrText, setPasswordErrText] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // ローディング状態
+  const [showLoadingScreen, setShowLoadingScreen] = useState(false); // ロード画面表示状態
+  const [showMikepadLoading, setShowMikepadLoading] = useState(false); // mikepad loading表示状態
 
   const togglePasswordVisibility = () => {
     setPasswordType((prevType) =>
@@ -81,15 +83,24 @@ function Login() {
 
     if (error) return;
     setLoading(true);
+    setShowLoadingScreen(true); // ログイン処理中にロード画面を表示
 
     try {
-      console.log("asdfghjkl;kjhgfd");
       const res = await authApi.login({ username, password });
       setLoading(false);
+      setShowLoadingScreen(false); // ログイン後にロード画面を非表示
       localStorage.setItem("token", res.token);
       console.log("ログインに成功しました");
-      navigate("/"); // ログイン成功後にホームページへ遷移
+
+      // mikepad loadingの表示
+      setShowMikepadLoading(true);
+      setTimeout(() => {
+        setShowMikepadLoading(false); // 2秒後に非表示
+        navigate("/"); // ログイン成功後にホームページへ遷移
+      }, 5000);
     } catch (err) {
+      setLoading(false);
+      setShowLoadingScreen(false); // エラーが発生してもロード画面を非表示
       console.log(err);
       const errors = err.data.errors;
       console.log(errors);
@@ -101,14 +112,25 @@ function Login() {
           setPasswordErrText(err.msg);
         }
       });
-      setLoading(false);
     }
   };
 
   return (
     <div className="body_loginscreen">
+      {showLoadingScreen && (
+        <div className="loading-screen">
+          <img
+            src="https://images.pexels.com/photos/1699574/pexels-photo-1699574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="loading"
+            width="860"
+            height="820"
+            style={{ filter: "brightness(65%)" }}
+          />
+        </div>
+      )}
+
       <div className="gradation">
-        <div id="loading" className="hidden">
+        <div id="loading" className={showLoadingScreen ? "" : "hidden"}>
           <img
             src="https://images.pexels.com/photos/1699574/pexels-photo-1699574.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             alt="loading"
@@ -118,81 +140,100 @@ function Login() {
           />
         </div>
       </div>
+
+      {/* mikepad loading */}
+      {showMikepadLoading && (
+        <div className="mikepad-loading">
+          <div className="binding"></div>
+          <div className="pad">
+            <div className="line line1"></div>
+            <div className="line line2"></div>
+            <div className="line line3"></div>
+          </div>
+          <div className="text">mikepad is loading...</div>
+        </div>
+      )}
+
       <div className="form-container">
         <h1 className="h1_loginscreen">Time Stamp</h1>
         <p className="subtitle">勤怠管理システム</p>
-        <>
-          <Box component="form" onSubmit={handleLogin} noValidate
-            sx={{
-              display: "flex",
-              flexDirection: "column", // フォーム要素を縦に並べる
-              gap: "16px", // 各要素間の間隔
-              width: "100%", // 必要に応じて幅を調整
-              maxWidth: "250px", // フォーム全体の最大幅を制限
-              margin: "0 auto", // 中央揃え
-            }}
-          >
-            <ThemeProvider theme={theme} >
-              <TextField
-                id="username"
-                label="名前"
-                margin="normal"
-                name="username"
-                required
-                helperText={usernameErrText}
-                error={usernameErrText !== ""}
-                disabled={loading}
-                onChange={(e) => setUsername(e.target.value)}
-
-              />
-              <TextField
-                id="password"
-                label="パスワード"
-                margin="normal"
-                name="password"
-                type={passwordType}
-                required
-                helperText={passwordErrText}
-                error={passwordErrText !== ""}
-                disabled={loading}
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end" className={`password-eye ${passwordType !== "password" ? "active" : ""}`}>
-                      <IconButton onClick={togglePasswordVisibility} edge="end" sx={{ color: "#f7f7f7", }} > {/*sx:パスワード目の色*/}
-                        {passwordType === "password" ? (
-                          <VisibilityOffIcon />
-                        ) : (
-                          <VisibilityIcon />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </ThemeProvider>
-
-            <LoadingButton
-              sx={{
-                mt: 3,
-                mb: 2,
-                variant: "contained",
-                backgroundColor: "#1976d2", // ボタンの背景色
-                color: "white", // テキストの色
-                "&:hover": {
-                  backgroundColor: "#1565c0", // ホバー時の背景色
-                },
+        <Box
+          component="form"
+          onSubmit={handleLogin}
+          noValidate
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            width: "100%",
+            maxWidth: "250px",
+            margin: "0 auto",
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            <TextField
+              id="username"
+              label="名前"
+              margin="normal"
+              name="username"
+              required
+              helperText={usernameErrText}
+              error={usernameErrText !== ""}
+              disabled={loading}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              id="password"
+              label="パスワード"
+              margin="normal"
+              name="password"
+              type={passwordType}
+              required
+              helperText={passwordErrText}
+              error={passwordErrText !== ""}
+              disabled={loading}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment
+                    position="end"
+                    className={`password-eye ${
+                      passwordType !== "password" ? "active" : ""
+                    }`}
+                  >
+                    <IconButton onClick={togglePasswordVisibility} edge="end" sx={{ color: "#f7f7f7" }}>
+                      {passwordType === "password" ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-              type="submit"
-              loading={loading}
-            >
-              ログイン
-            </LoadingButton>
-          </Box>
-          <Button component={Link} to="../register">
-            アカウントを持っていませんか？新規登録
-          </Button>
-        </>
+            />
+          </ThemeProvider>
+
+          <LoadingButton
+            sx={{
+              mt: 3,
+              mb: 2,
+              variant: "contained",
+              backgroundColor: "#1976d2",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#1565c0",
+              },
+            }}
+            type="submit"
+            loading={loading}
+          >
+            ログイン
+          </LoadingButton>
+        </Box>
+        <Button component={Link} to="../register">
+          アカウントを持っていませんか？新規登録
+        </Button>
       </div>
     </div>
   );

@@ -166,19 +166,6 @@ function Home() {
 
   return (
     <div className="container">
-      {loading ? (
-        <div className="mikepad-loading">
-          <div className="binding"></div>
-          <div className="pad">
-            <div className="line line1"></div>
-            <div className="line line2"></div>
-            <div className="line line3"></div>
-          </div>
-          <div className="text">
-            mikepad is loading...
-          </div>
-        </div>
-      ) : (
         <>
           <header className="header">
             <nav className="nav">
@@ -186,7 +173,7 @@ function Home() {
                 <strong>Time Stamp</strong>
               </h1>
               <div className={`person-icon ${isClicked ? 'clicked' : ''}`}></div>
-              <div className='homeUserName'>{user.username}</div>
+              <div className='homeUserName'>{user ? user.username : "Loading..."}</div>
               <div className="popupBtn">
                 <IconButton aria-label="Example" onClick={togglePopup}>
                   <FontAwesomeIcon icon={faEllipsisV} style={{ color: '#090909' }}/>
@@ -241,7 +228,6 @@ function Home() {
           </div>
           <WorkButtons id={123} name="山田太郎" />
         </>
-      )}
     </div>
   );
 }
