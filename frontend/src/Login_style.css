@@ -91,5 +91,109 @@ height: 35px;
 color: #f7f7f7;
 background-color: #3152c0;
 }
+/* ロード画面 */
+  /* ローディング画面 start */
+  .mikepad-loading {
+    width : 100%;
+    height: 100%;
+    background-color: #090909;
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left : 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -moz-transform: translateY(-50%) translateX(-50%);
+    -o-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+    }
+    .mikepad-loading .binding {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    content : ‘’;
+    width : 29px;
+    height : 6px;
+    border : 2px solid #E15958;
+    margin : 0 auto;
+    }
+    .mikepad-loading .pad {
+    position: fixed;
+    top: 50.5%;
+    left: 50%;
+    width : 17px;
+    height : 27px;
+    border : 2px solid #E15958;
+    border-top : 0;
+    padding : 6px;
+    margin : 0 auto;
+    }
+    .mikepad-loading .line {
+    width : 15px;
+    margin-top : 4px;
+    margin-left: 1px;
+    border-top : 2px solid #E15958;
+    opacity : 0;
+    -webkit-animation : writeline 3s infinite ease-in;
+    -moz-animation : writeline 3s infinite ease-in;
+    -o-animation : writeline 3s infinite ease-in;
+    animation : writeline 3s infinite ease-in;
+    }
+    .mikepad-loading .line:first-child {
+    margin-top : 0;
+    margin-bottom: 0;
+    }
+    .mikepad-loading .line.line1 {
+    margin-top: 7px;
+    -webkit-animation-delay: 0s;
+    -moz-animation-delay: 0s;
+    -o-animation-delay: 0s;
+    animation-delay: 0s;
+    }
+    .mikepad-loading .line.line2 {
+    -webkit-animation-delay: 0.5s;
+    -moz-animation-delay: 0.5s;
+    -o-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+    }
+    .mikepad-loading .line.line3 {
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    -o-animation-delay: 1s;
+    animation-delay : 1s;
+    }
+    .mikepad-loading .text {
+    position: fixed;
+    top: 55%;
+    left: 46.5%;
+    text-align : center;
+    margin-top : 10px;
+    font-size : 14px;
+    color : #E15958;
+    }
+    @-webkit-keyframes writeline {
+    0% { width : 0px; opacity: 0; }
+    33% { width : 15px; opacity : 1; }
+    70% { opacity : 1; }
+    100% {opacity : 0; }
+    }
+    @-moz-keyframes writeline {
+    0% { width : 0px; opacity: 0; }
+    33% { width : 15px; opacity : 1; }
+    70% { opacity : 1; }
+    100% {opacity : 0; }
+    }
+    @-o-keyframes writeline {
+    0% { width : 0px; opacity: 0; }
+    33% { width : 15px; opacity : 1; }
+    70% { opacity : 1; }
+    100% {opacity : 0; }
+    }
+    @keyframes writeline {
+    0% { width : 0px; opacity: 0; }
+    33% { width : 15px; opacity : 1; }
+    70% { opacity : 1; }
+    100% {opacity : 0; }
+    }
+    /* ローディング画面 end */
 
 /* ログイン画面 end */
