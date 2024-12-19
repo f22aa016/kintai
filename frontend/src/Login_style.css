@@ -2,6 +2,9 @@
 body{
   margin: 0;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background-color: #090909;
 }
 
 .body_loginscreen {
