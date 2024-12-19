@@ -97,7 +97,7 @@ function Login() {
       setTimeout(() => {
         setShowMikepadLoading(false); // 2秒後に非表示
         navigate("/"); // ログイン成功後にホームページへ遷移
-      }, 5000);
+      }, 2000);
     } catch (err) {
       setLoading(false);
       setShowLoadingScreen(false); // エラーが発生してもロード画面を非表示

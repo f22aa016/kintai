@@ -242,7 +242,6 @@ const WorkButtons = ({ id, name }) => {
           "Content-Type": "application/json",
         },
       });
-      alert("出勤しました");
       console.log("Clock In 成功: ", res.data);
       window.location.reload();
     } catch (error) {

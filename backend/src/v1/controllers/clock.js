@@ -15,6 +15,7 @@ exports.clockIn = async (req, res) => {
       clockIn: clockInTokyo, // 現在時刻を自動設定
     });
 
+    clock.clockIn = new Date;
     // 作成された Clock オブジェクトを返す
     res.status(201).json(clock);
   } catch (err) {
